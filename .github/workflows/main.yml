@@ -2,7 +2,6 @@ name: keepalive_kyb
 
 on:
   schedule:
-    # 每隔6天运行一次，运行时间点自行设置(此处北京时间8:14运行)
     - cron: '14 0 */6 * *'
   workflow_dispatch:
 
@@ -13,6 +12,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Random Cron
+      uses: grbnb/random-workflow-cron@v2
+      with:
+        github_token: ${{ secrets.PAT }}  # 务必添加Personal Access Token密钥 没有请自行创建 https://github.com/settings/tokens/new
+        keep_history: true
+        time_zone: "UTC+8"
+        interval_count: 1
+        cron_dmw: "*/6 * *"
+
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -21,9 +29,9 @@ jobs:
     - name: Install Dependencies
       run: |
         pip install -r requirements.txt
-
+    
     - name: Run Keepalive
       run: python3 koyeb.py
       env:
         KOY_EB: ${{ secrets.KOY_EB }}
-        QYWX_KEY: ${{ secrets.QYWX_KEY }}  ## 填写对应的平台通知变量名[此处使用企业微信应用消息推送]，若需要多平台同时推送，请按此格式填写多个平台对应的变量名即可
+        PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}  ## 填写对应的平台通知变量名[此处使用pushplus推送]，若需要多平台同时推送，请按此格式填写多个平台对应的变量名即可
