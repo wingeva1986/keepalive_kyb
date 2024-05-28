@@ -2,7 +2,7 @@ name: keepalive_kyb
 
 on:
   schedule:
-    - cron: "39 4 */6 * *"
+    - cron: "1 18 */6 * *"
   workflow_dispatch:
 
 jobs:
