@@ -18,10 +18,6 @@ except:
 List = []
 session = requests.Session()
 
-
-# 内置Python环境变量[纯Python环境可启用]
-#os.environ['KOY_EB'] = "aaa-bbb"
-
 def get_time_stamp(result):
     utct_date = datetime.datetime.strptime(result, "%Y-%m-%dT%H:%M:%S.%f%z")
     local_date = utct_date + datetime.timedelta(hours=8)
@@ -29,7 +25,6 @@ def get_time_stamp(result):
     return local_date_srt
 
 def auto_living(token):
-    # 获取账户应用信息
     list_url = 'https://app.koyeb.com/v1/apps?limit=100'
     list_head = {
         'authorization': f'Bearer {token}',
@@ -43,8 +38,8 @@ def auto_living(token):
         list_date = res_list.json()
         if len(list_date.get("apps")) > 0:
             for i in range(len(list_date.get("apps"))):
-                stop_url = f"https://app.koyeb.com/v1/apps/{list_date.get('apps')[i]['id']}/pause"  # 暂停api
-                run_url = f"https://app.koyeb.com/v1/apps/{list_date.get('apps')[i]['id']}/resume"  # 启动api
+                stop_url = f"https://app.koyeb.com/v1/apps/{list_date.get('apps')[i]['id']}/pause"
+                run_url = f"https://app.koyeb.com/v1/apps/{list_date.get('apps')[i]['id']}/resume"
                 ac_head = {
                     'authorization': f'Bearer {token}',
                     'content-type': 'application/json',
@@ -125,7 +120,7 @@ def login(usr, pwd):
                 j = 0
                 for i in range(len(lastlogin.get('activities'))):
                     if lastlogin.get('activities')[i].get('object').get('name') == "console" and j < 2:
-                        if lastlogin.get('count') > 1 and j == 1:
+                        if lastlogin.get('count') is not None and lastlogin.get('count') > 1 and j == 1:
                             List.append(f"上次登录日期：{get_time_stamp(lastlogin.get('activities')[i].get('created_at'))}")
                         else:
                             List.append(f"当前登录日期：{get_time_stamp(lastlogin.get('activities')[i].get('created_at'))}")
@@ -134,15 +129,13 @@ def login(usr, pwd):
                 print(resg.text)
         else:
             print(resp.text)
-        # 自动保活应用
         auto_living(token)
     else:
         List.append('账号登陆失败: 账号或密码错误')
         List.append(res.text)
 
-
 if __name__ == '__main__':
-    delay_sec = random.randint(1,50)
+    delay_sec = random.randint(1, 50)
     List.append(f'随机延时{delay_sec}s')
     time.sleep(delay_sec)
     i = 0
