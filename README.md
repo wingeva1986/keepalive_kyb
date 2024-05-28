@@ -34,6 +34,9 @@
 | `TG_PROXY_PORT` | Telegram 代理的端口 | 非必须 | 例子：http代理 http://127.0.0.1:1080 则填写 1080  |
 
 
+##### 提醒：  
+以下`secrets.XXX`变量请务必前往仓库`settings` -> `Secrets and variables` -> `New repository secret`处添加对应的XXX变量名和值，例如固定时间点运行，启用企业微信应用消息推送用到的变量名有KOY_EB和QYWX_AM，所以要在仓库`settings` -> `Secrets and variables` -> `New repository secret`处添加KOY_EB和QYWX_AM，以及对应的值，对应的值见上表，我action里的用的企业微信机器人推送，所以有用到的变量名有KOY_EB和QYWX_KEY。
+
 #### actions工作流文件示例  
  - 固定时间点运行，启用企业微信应用消息推送  
 ```yaml
@@ -111,8 +114,6 @@ jobs:
 
 ```
 
-##### 提醒：  
-以上`secrets.XXX`变量请务必前往仓库`settings` -> `Secrets and variables` -> `New repository secret`处添加对应的XXX变量名和值
 
 ## 免责声明
 
