@@ -26,4 +26,4 @@ jobs:
       run: python3 koyeb.py
       env:
         KOY_EB: ${{ secrets.KOY_EB }}
-        QYWX_KEY: ${{ secrets.QYWX_KEY }}  ## 填写对应的平台通知变量名[此处使用企业微信应用消息推送]，若需要多平台同时推送，请按此格式填写多个平台对应的变量名即可
+        #QYWX_KEY: ${{ secrets.QYWX_KEY }}  ## 填写对应的平台通知变量名[此处使用企业微信应用消息推送]，若需要多平台同时推送，请按此格式填写多个平台对应的变量名即可
